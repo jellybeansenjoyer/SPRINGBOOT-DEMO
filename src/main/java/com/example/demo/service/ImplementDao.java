@@ -17,4 +17,9 @@ public class ImplementDao implements PersonDao {
         return 1;
     }
 
+    @Override
+    public List<Person> getAllObjects() {
+        return DB;
+    }
+
 }

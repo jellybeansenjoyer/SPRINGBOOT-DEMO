@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PersonService {
     private PersonDao dao;
@@ -17,5 +19,8 @@ public class PersonService {
     public int postPerson(Person person)
     {
         return dao.pushData(person);
+    }
+    public List<Person> getAllPersons(){
+        return dao.getAllObjects();
     }
 }
