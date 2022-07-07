@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public class Person {
     private final UUID id;
+
     private final String name;
 
     public String getName() {
