@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dao.PersonDao;
 import com.example.demo.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,6 +13,13 @@ import java.util.UUID;
 
 @Repository("postgres")
 public class ImplementDao implements PersonDao {
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public ImplementDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public static List<Person> DB= new ArrayList<Person>();
     @Override
     public int insertPerson(UUID id, Person person) {
@@ -20,7 +29,12 @@ public class ImplementDao implements PersonDao {
 
     @Override
     public List<Person> getAllObjects() {
-        return DB;
+        String q = "SELECT id,name FROM person";
+        return jdbcTemplate.query(q,(result,i)->{
+            UUID id = UUID.fromString(result.getString("id"));
+            String name = result.getString("name");
+            return new Person(id,name);
+        });
     }
 
     @Override
